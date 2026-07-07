@@ -30,7 +30,7 @@ const start =async ()=>{
 
 console.log("MongoDB Connected");
 server.listen(app.get("port"),()=>{
-    console.log("listing on port 8000");
+    console.log("listing on port 8080");
 });
 }
 start();
