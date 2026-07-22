@@ -405,7 +405,7 @@ export default function VideoMeetComponent() {
             let tracks = localVideoref.current.srcObject.getTracks()
             tracks.forEach(track => track.stop())
         } catch (e) { }
-        window.location.href = "/"
+        window.location.href = "/home";
     }
 
     let openChat = () => {
@@ -449,21 +449,77 @@ export default function VideoMeetComponent() {
     return (
         <div>
 
-            {askForUsername === true ?
+            {
+            askForUsername === true ?
 
-                <div>
-
-
-                    <h2>Enter into Lobby </h2>
-                    <TextField id="outlined-basic" label="Username" value={username} onChange={e => setUsername(e.target.value)} variant="outlined" />
-                    <Button variant="contained" onClick={connect}>Connect</Button>
+                // <div>
 
 
-                    <div>
-                        <video ref={localVideoref} autoPlay muted></video>
-                    </div>
+                //     <h2>Enter into Lobby </h2>
+                //     <TextField id="outlined-basic" label="Username" value={username} onChange={e => setUsername(e.target.value)} variant="outlined" />
+                //     <Button variant="contained" onClick={connect}>Connect</Button>
 
-                </div> :
+
+                //     <div>
+                //         <video ref={localVideoref} autoPlay muted></video>
+                //     </div>
+
+                // </div> 
+                <div className={styles.lobbyContainer}>
+
+    <div className={styles.lobbyCard}>
+
+        <h1>Welcome to the lobby</h1>
+
+        <p>Join your meeting securely</p>
+
+        <video
+            ref={localVideoref}
+            autoPlay
+            muted
+            className={styles.previewVideo}
+        />
+
+        <TextField
+            fullWidth
+            label="Enter your name"
+            variant="outlined"
+            value={username}
+            onChange={(e)=>setUsername(e.target.value)}
+        />
+
+        <div className={styles.deviceButtons}>
+
+            <Button
+                variant={video ? "contained" : "outlined"}
+                onClick={handleVideo}
+            >
+                {video ? "Camera On" : "Camera Off"}
+            </Button>
+
+            <Button
+                variant={audio ? "contained" : "outlined"}
+                onClick={handleAudio}
+            >
+                {audio ? "Mic On" : "Mic Off"}
+            </Button>
+
+        </div>
+
+        <Button
+            variant="contained"
+            size="large"
+            fullWidth
+            onClick={connect}
+        >
+            Join Meeting
+        </Button>
+
+            </div>
+
+        </div>
+                
+                :
 
 
                 <div className={styles.meetVideoContainer}>
@@ -503,7 +559,16 @@ export default function VideoMeetComponent() {
                         <IconButton onClick={handleVideo} style={{ color: "white" }}>
                             {(video === true) ? <VideocamIcon /> : <VideocamOffIcon />}
                         </IconButton>
-                        <IconButton onClick={handleEndCall} style={{ color: "red" }}>
+                    <IconButton
+                onClick={handleEndCall}
+                sx={{
+                    backgroundColor: "#ef4444 !important",
+                    color: "#fff",
+                    "&:hover": {
+                    backgroundColor: "#dc2626 !important",
+                    },
+                }}
+                >
                             <CallEndIcon  />
                         </IconButton>
                         <IconButton onClick={handleAudio} style={{ color: "white" }}>
